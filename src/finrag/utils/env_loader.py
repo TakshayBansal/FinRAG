@@ -21,7 +21,7 @@ def load_env_file(env_path: Optional[str] = None) -> bool:
         
         if env_path is None:
             # Look for .env in project root
-            current_dir = Path(__file__).parent
+            current_dir = Path(__file__).parent.parent.parent.parent
             env_path = current_dir / '.env'
         else:
             env_path = Path(env_path)

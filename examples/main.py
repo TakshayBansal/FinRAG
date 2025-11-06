@@ -35,7 +35,7 @@ def main():
     finrag = FinRAG(config)
     
     # Example 1: Load and process a financial document
-    pdf_path = Path(__file__).parent / "256911814.pdf"
+    pdf_path = Path(__file__).parent.parent / "data" / "test_pdf.pdf"
     
     if pdf_path.exists():
         print(f"\nLoading PDF: {pdf_path}")
@@ -101,55 +101,55 @@ def main():
         
     else:
         print(f"PDF file not found: {pdf_path}")
-        print("\nExample usage without PDF:")
-        print("="*80)
+        # print("\nExample usage without PDF:")
+        # print("="*80)
         
-        # Example with text documents
-        sample_docs = [
-            """
-            Company XYZ Financial Report Q4 2024
+        # # Example with text documents
+        # sample_docs = [
+        #     """
+        #     Company XYZ Financial Report Q4 2024
             
-            Revenue: $150M (up 25% YoY)
-            Net Income: $45M (up 30% YoY)
-            Operating Margin: 30%
+        #     Revenue: $150M (up 25% YoY)
+        #     Net Income: $45M (up 30% YoY)
+        #     Operating Margin: 30%
             
-            Key Highlights:
-            - Strong growth in cloud services segment
-            - Successful product launch in Asian markets
-            - Improved operational efficiency
-            """,
-            """
-            Risk Factors:
+        #     Key Highlights:
+        #     - Strong growth in cloud services segment
+        #     - Successful product launch in Asian markets
+        #     - Improved operational efficiency
+        #     """,
+        #     """
+        #     Risk Factors:
             
-            1. Market Competition: Intense competition from established players
-            2. Regulatory Changes: Potential new regulations in key markets
-            3. Currency Fluctuations: Exposure to foreign exchange risk
-            4. Technology Disruption: Rapid changes in technology landscape
-            """,
-            """
-            Future Outlook:
+        #     1. Market Competition: Intense competition from established players
+        #     2. Regulatory Changes: Potential new regulations in key markets
+        #     3. Currency Fluctuations: Exposure to foreign exchange risk
+        #     4. Technology Disruption: Rapid changes in technology landscape
+        #     """,
+        #     """
+        #     Future Outlook:
             
-            The company expects continued growth in 2025 with projected revenue
-            of $180-200M. Key focus areas include:
-            - Expansion into new geographic markets
-            - Investment in R&D for next-generation products
-            - Strategic acquisitions to enhance market position
-            """
-        ]
+        #     The company expects continued growth in 2025 with projected revenue
+        #     of $180-200M. Key focus areas include:
+        #     - Expansion into new geographic markets
+        #     - Investment in R&D for next-generation products
+        #     - Strategic acquisitions to enhance market position
+        #     """
+        # ]
         
-        print("Processing sample financial documents...")
-        finrag.add_documents(sample_docs)
+        # print("Processing sample financial documents...")
+        # finrag.add_documents(sample_docs)
         
-        stats = finrag.get_statistics()
-        print("\nTree Statistics:")
-        for key, value in stats.items():
-            print(f"  {key}: {value}")
+        # stats = finrag.get_statistics()
+        # print("\nTree Statistics:")
+        # for key, value in stats.items():
+        #     print(f"  {key}: {value}")
         
-        # Query the system
-        question = "What is the revenue and growth rate?"
-        print(f"\nQuestion: {question}")
-        result = finrag.query(question)
-        print(f"Answer: {result['answer']}")
+        # # Query the system
+        # question = "What is the revenue and growth rate?"
+        # print(f"\nQuestion: {question}")
+        # result = finrag.query(question)
+        # print(f"Answer: {result['answer']}")
 
 
 if __name__ == "__main__":
