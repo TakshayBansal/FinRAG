@@ -10,10 +10,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 # Load environment variables from .env file
-from finrag.utils import load_env_file, check_required_env_vars
+from src.finrag.utils import load_env_file, check_required_env_vars
 load_env_file()
 
-from finrag import FinRAGConfig, FinRAG
+from src.finrag import FinRAGConfig, FinRAG
 
 
 def simple_example():
