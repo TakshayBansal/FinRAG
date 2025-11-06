@@ -10,10 +10,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 # Load environment variables from .env file
-from src.finrag.utils import load_env_file, check_required_env_vars
+from finrag.utils import load_env_file, check_required_env_vars
 load_env_file()
 
-from src.finrag import FinRAGConfig, FinRAG
+from finrag import FinRAGConfig, FinRAG
 
 
 def simple_example():
@@ -40,99 +40,89 @@ def simple_example():
     # Create sample financial documents
     sample_documents = [
         """
-        Tech Corp Inc. - Q4 2024 Financial Results
-        
-        Financial Highlights:
-        - Total Revenue: $500 million (up 35% year-over-year)
-        - Net Income: $125 million (up 40% year-over-year)
-        - Operating Margin: 25% (improved from 22% in Q4 2023)
-        - Earnings Per Share: $3.50 (up from $2.50 in Q4 2023)
-        - Cash and Cash Equivalents: $800 million
-        
-        Business Segment Performance:
-        
-        Cloud Services: Revenue of $300M (up 45% YoY)
-        - Strong adoption of our new AI-powered analytics platform
-        - Added 500 new enterprise customers
-        - Renewal rate of 95%
-        
-        Software Products: Revenue of $150M (up 25% YoY)
-        - Successful launch of version 5.0
-        - Expanded into healthcare and finance verticals
-        
-        Professional Services: Revenue of $50M (up 15% YoY)
-        - Increased consulting engagements
-        - Higher average deal sizes
-        """,
-        
-        """
-        Risk Factors and Challenges:
-        
-        1. Market Competition
-        - Facing increased competition from established cloud providers
-        - Price pressure in the software market
-        - Need to continuously innovate to maintain market share
-        
-        2. Cybersecurity Risks
-        - Growing threat landscape
-        - Invested $50M in security infrastructure
-        - Implemented zero-trust architecture
-        
-        3. Regulatory Environment
-        - New data privacy regulations in Europe and Asia
-        - Compliance costs estimated at $20M annually
-        - Working with regulators to ensure compliance
-        
-        4. Talent Acquisition and Retention
-        - Competitive market for AI/ML engineers
-        - Increased employee benefits budget by 15%
-        - Stock-based compensation remains competitive
-        
-        5. Economic Uncertainty
-        - Potential recession could impact customer spending
-        - Foreign exchange headwinds in key markets
-        - Monitoring macro trends closely
-        """,
-        
-        """
-        Future Outlook and Strategy - 2025 Guidance
-        
-        Revenue Projections:
-        - Q1 2025: $520-540M (4-8% growth)
-        - Full Year 2025: $2.2-2.3B (10-15% growth)
-        
-        Strategic Priorities:
-        
-        1. AI and Machine Learning Expansion
-        - Investing $200M in AI research and development
-        - Building new generative AI capabilities
-        - Target: Launch 3 new AI-powered products by Q3 2025
-        
-        2. Geographic Expansion
-        - Opening offices in Singapore, Dubai, and São Paulo
-        - Targeting 30% of revenue from international markets by end of 2025
-        - Currently at 20% international revenue
-        
-        3. Strategic Acquisitions
-        - Allocated $300M for M&A activity
-        - Focusing on cybersecurity and data analytics companies
-        - Completed due diligence on 2 potential targets
-        
-        4. Operational Efficiency
-        - Implementing automation to reduce costs
-        - Target: Improve operating margin to 28% by Q4 2025
-        - Streamlining sales and marketing operations
-        
-        5. Customer Success Initiatives
-        - Expanding customer support team by 40%
-        - Launching new training and certification programs
-        - Goal: Achieve Net Promoter Score of 70+
-        
-        Capital Allocation:
-        - R&D: 25% of revenue
-        - Sales & Marketing: 35% of revenue
-        - G&A: 15% of revenue
-        - Share buyback program: $100M authorized
+        Financial Capital
+
+TCS' success is a testament to its robust business model and its ability to perpetually adapt in a constantly changing technology environment, ensuring it remains relevant to customers while delivering value to all stakeholders.
+
+- Superior profitability, providing the financial strength to invest in new capabilities, Research &#x26; Innovation, navigating economic downturns and changing technology waves
+- Prudent use of working capital and cash flow management, resulting in robust cash conversion and increased invested funds
+- A strong balance sheet with zero debt, further strengthening return ratios
+- Consistently high shareholder returns
+
+# TCS Value Creation and Distribution (FY 2021 - 25)¹
+
+# Revenue Trend
+
+CAGR 10.2% In FY 2025, TCS achieved a year-over-year revenue growth of 6.0%, demonstrating a resilient business performance in this uncertain environment.
+
+| FY        | 2021    | 2022    | 2023    | 2024    | 2025    |
+| --------- | ------- | ------- | ------- | ------- | ------- |
+| (₹ crore) | 164,177 | 191,754 | 225,458 | 240,893 | 255,324 |
+
+On a constant currency basis, revenue grew by 4.2%, outpacing the growth in FY 2024.
+
+Over the past five financial years, the company recorded a compound annual growth rate (CAGR) of 10.2%, highlighting the resilience and scalability of its business model.
+
+# Operating Profit Trend
+
+In FY 2025, TCS reported an operating margin of 24.3%, a marginal decline of 30 basis points compared to FY 2024.
+
+This moderation was primarily attributable to the impact of annual wage hikes, associates promotions, and strategic investments in infrastructure and capability development.
+
+| FY                         | 2021\* | 2022   | 2023   | 2024\* | 2025   |
+| -------------------------- | ------ | ------ | ------ | ------ | ------ |
+| Operating Profit (₹ crore) | 42,481 | 48,453 | 54,237 | 59,311 | 62,165 |
+| Operating Margin           | 25.9%  | 25.3%  | 24.1%  | 24.6%  | 24.3%  |
+
+These cost pressures were partially offset by improvements in workforce utilization, productivity, and realization, along with favourable currency movements.
+
+¹GRI 201-1 *Excludes provision (in FY 2021) and settlement (in FY 2024) of legal claim
+
+Integrated Annual Report 2024-25
+
+---
+
+Financial Capital
+
+# Earnings Per Share
+
+CAGR 9.3% TCS has consistently grown its Earnings Per Share (EPS), achieving a CAGR of 9.3% over the past five financial years. This steady increase highlights the company’s growing earnings and its commitment to delivering long-term value to shareholders.
+
+| FY            | 2021\* | 2022   | 2023   | 2024\* | 2025   |
+| ------------- | ------ | ------ | ------ | ------ | ------ |
+| (Amount in ₹) | 89.27  | 103.62 | 115.19 | 127.74 | 134.19 |
+
+# Operating Cash Flow and Cash Conversion
+
+116.2% TCS maintained an excellent cash conversion ratio exceeding 100%, highlighting its robust financial health and strong ability to generate cash from operations. This efficiency in translating profits to cash flows enables TCS to meet financial obligations and fund growth initiatives without relying on external financing.
+
+| FY                        | 2021\* | 2022   | 2023   | 2024\* | 2025   |
+| ------------------------- | ------ | ------ | ------ | ------ | ------ |
+| (₹ crore)                 | 38,802 | 39,949 | 41,965 | 45,097 | 48,908 |
+| Operating Cash Flow (OCF) |        |        |        |        |        |
+| OCF to Net Profit Ratio   | 116.2% | 104.2% | 99.6%  | 100.7% | 96.8%  |
+
+# Shareholder Payouts
+
+101.5% TCS has a practice of returning substantial free cash flow to shareholders and based on the company's performance, the Board of Directors have declared three interim dividends of ₹10 each, a special dividend of ₹66, and recommended a final dividend of ₹30 (pending shareholders' approval at this AGM), for a total dividend of ₹126 per share for FY 2025. TCS has consistently declared dividend every quarter since its listing, complemented by three bonus issues and five buyback offers.
+
+| FY                       | 2021\* | 2022   | 2023   | 2024\* | 2025   |
+| ------------------------ | ------ | ------ | ------ | ------ | ------ |
+| (₹ crore)                | 33,873 | 38,010 | 42,079 | 47,445 | 45,588 |
+| Shareholder Payout       |        |        |        |        |        |
+| Shareholder Payout ratio | 101.5% | 99.2%  | 99.8%  | 101.8% | 93.9%  |
+
+# ~~Return on Equity~~
+
+TCS’ high and improving Return on Equity reflects the company’s ability to generate strong profitability and manage resources efficiently. This highlights the company’s financial discipline and operational rigor, as well as its judicious use of shareholder capital.
+
+| FY | 2021\* | 2022  | 2023  | 2024\* | 2025  |
+| -- | ------ | ----- | ----- | ------ | ----- |
+|    | 38.9%  | 43.4% | 46.9% | 51.3%  | 52.2% |
+
+*Excludes provision (in FY 2021) and settlement (in FY 2024) of legal claim
+
+Integrated Annual Report 2024-25
         """
     ]
     
