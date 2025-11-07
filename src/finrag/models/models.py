@@ -6,6 +6,7 @@ import numpy as np
 from openai import OpenAI
 import tiktoken
 from tenacity import retry, stop_after_attempt, wait_exponential
+import re
 
 from ..core.base_models import BaseEmbeddingModel, BaseSummarizationModel, BaseQAModel, BaseChunker
 
@@ -190,5 +191,99 @@ class FinancialChunker(BaseChunker):
             # Safety check: prevent infinite loop if something goes wrong
             if start >= len(tokens):
                 break
+        
+        return chunks
+    
+    def extract_metadata(self, text: str, chunk_text: str = None) -> Dict[str, Any]:
+        """
+        Extract financial metadata from text (sector, company, year).
+        Uses pattern matching and heuristics.
+        
+        Args:
+            text: Full document text
+            chunk_text: Specific chunk text (optional, uses full text if None)
+        
+        Returns:
+            Dictionary with metadata keys: sector, company, year
+        """
+        if chunk_text is None:
+            chunk_text = text
+        
+        metadata = {
+            "sector": None,
+            "company": None,
+            "year": None
+        }
+        
+        # Extract year - look for 4-digit years (1900-2099)
+        year_pattern = r'\b(19\d{2}|20\d{2})\b'
+        years = re.findall(year_pattern, text[:2000])  # Check first 2000 chars
+        if years:
+            # Most common year or most recent
+            metadata["year"] = max(set(years), key=years.count)
+        
+        # Extract company - look for common patterns
+        # Pattern 1: "Company Name Inc.", "Company Name Corp", etc.
+        company_patterns = [
+            r'\b([A-Z][a-zA-Z\s&]+(?:Inc|Corp|Corporation|Ltd|Limited|LLC|Company|Co)\.?)\b',
+            r'\b([A-Z][a-zA-Z]+(?:\s[A-Z][a-zA-Z]+){1,3})\s+(?:Inc|Corp|Corporation|Ltd|Limited|LLC)',
+        ]
+        
+        for pattern in company_patterns:
+            companies = re.findall(pattern, text[:1000])
+            if companies:
+                # Take the most common or first occurrence
+                metadata["company"] = companies[0] if isinstance(companies[0], str) else companies[0][0]
+                break
+        
+        # Extract sector - look for common financial sectors
+        sectors = {
+            "technology": ["technology", "software", "tech", "IT", "digital", "cloud"],
+            "finance": ["financial", "bank", "insurance", "investment", "securities"],
+            "healthcare": ["healthcare", "pharmaceutical", "medical", "biotech", "health"],
+            "energy": ["energy", "oil", "gas", "renewable", "utilities"],
+            "retail": ["retail", "consumer", "e-commerce", "commerce"],
+            "manufacturing": ["manufacturing", "industrial", "automotive", "production"],
+            "real estate": ["real estate", "property", "REIT"],
+            "telecommunications": ["telecommunications", "telecom", "communications"]
+        }
+        
+        text_lower = text[:5000].lower()  # Check first 5000 chars
+        sector_scores = {}
+        
+        for sector_name, keywords in sectors.items():
+            score = sum(text_lower.count(keyword) for keyword in keywords)
+            if score > 0:
+                sector_scores[sector_name] = score
+        
+        if sector_scores:
+            metadata["sector"] = max(sector_scores, key=sector_scores.get)
+        
+        return metadata
+    
+    def chunk_text_with_metadata(
+        self,
+        text: str,
+        extract_metadata: bool = True
+    ) -> List[Dict[str, Any]]:
+        """
+        Chunk text and optionally extract metadata.
+        
+        Args:
+            text: Input text to chunk
+            extract_metadata: Whether to extract financial metadata
+        
+        Returns:
+            List of chunks with metadata
+        """
+        chunks = self.chunk_text(text)
+        
+        if extract_metadata:
+            # Extract document-level metadata once
+            doc_metadata = self.extract_metadata(text)
+            
+            # Add to all chunks
+            for chunk in chunks:
+                chunk.update(doc_metadata)
         
         return chunks

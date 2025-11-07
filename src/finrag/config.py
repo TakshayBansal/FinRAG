@@ -39,6 +39,10 @@ class FinRAGConfig:
     summarization_length: int = field(default_factory=lambda: int(os.getenv("FINRAG_SUMMARIZATION_LENGTH", "200")))
     tree_depth: int = field(default_factory=lambda: int(os.getenv("FINRAG_TREE_DEPTH", "3")))
     
+    # Metadata clustering (FinRAG paper feature)
+    use_metadata_clustering: bool = field(default_factory=lambda: os.getenv("FINRAG_USE_METADATA_CLUSTERING", "true").lower() == "true")
+    metadata_keys: List[str] = field(default_factory=lambda: ["sector", "company", "year"])
+    
     # Retrieval parameters
     top_k: int = field(default_factory=lambda: int(os.getenv("FINRAG_TOP_K", "10")))
     similarity_threshold: float = field(default_factory=lambda: float(os.getenv("FINRAG_SIMILARITY_THRESHOLD", "0.7")))

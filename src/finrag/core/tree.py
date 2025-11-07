@@ -31,15 +31,18 @@ class RAPTORTree:
         self,
         embedding_model: BaseEmbeddingModel,
         summarization_model: BaseSummarizationModel,
-        config: TreeConfig = None
+        config: TreeConfig = None,
+        use_metadata_clustering: bool = True
     ):
         self.embedding_model = embedding_model
         self.summarization_model = summarization_model
         self.config = config or TreeConfig()
+        self.use_metadata_clustering = use_metadata_clustering
         self.clustering = RAPTORClustering(
             max_cluster_size=self.config.max_cluster_size,
             min_cluster_size=self.config.min_cluster_size,
-            reduction_dimension=self.config.reduction_dimension
+            reduction_dimension=self.config.reduction_dimension,
+            use_metadata_clustering=use_metadata_clustering
         )
         
         self.root_nodes: List[ClusterNode] = []
@@ -96,6 +99,41 @@ class RAPTORTree:
         self.root_nodes = current_level_nodes
         print(f"Tree building complete! Total levels: {current_level + 1}")
     
+    def _inherit_metadata_from_children(self, children: List[ClusterNode]) -> Dict[str, Any]:
+        """
+        Inherit metadata from children nodes.
+        Takes the most common value for each metadata field.
+        
+        Args:
+            children: List of child nodes
+            
+        Returns:
+            Dictionary of inherited metadata
+        """
+        if not children:
+            return {}
+        
+        # Collect metadata from children
+        metadata_fields = ['sector', 'company', 'year']
+        inherited = {}
+        
+        for field in metadata_fields:
+            # Get all non-None, non-'unknown' values for this field
+            values = []
+            for child in children:
+                if hasattr(child, 'metadata') and child.metadata:
+                    value = child.metadata.get(field)
+                    if value and value != 'unknown':
+                        values.append(value)
+            
+            if values:
+                # Use the most common value
+                from collections import Counter
+                most_common = Counter(values).most_common(1)[0][0]
+                inherited[field] = most_common
+        
+        return inherited
+    
     def _build_level(
         self,
         nodes: List[ClusterNode],
@@ -117,8 +155,8 @@ class RAPTORTree:
         # Get embeddings for current nodes
         embeddings = np.array([node.embedding for node in nodes])
         
-        # Perform clustering
-        clusters = self.clustering.perform_clustering(embeddings)
+        # Perform clustering with metadata awareness
+        clusters = self.clustering.perform_clustering_with_nodes(nodes, embeddings)
         
         if len(clusters) == 0:
             return []
@@ -145,6 +183,13 @@ class RAPTORTree:
             # Create embedding for summary
             summary_embedding = self.embedding_model.create_embedding(summary)
             
+            # Inherit metadata from children (for metadata clustering consistency)
+            inherited_metadata = self._inherit_metadata_from_children(cluster_nodes)
+            inherited_metadata.update({
+                "num_children": len(cluster_nodes),
+                "cluster_idx": cluster_idx
+            })
+            
             # Create new parent node
             parent_node = ClusterNode(
                 node_id=f"level_{level}_cluster_{cluster_idx}",
@@ -152,10 +197,7 @@ class RAPTORTree:
                 embedding=summary_embedding,
                 children=cluster_nodes,
                 level=level,
-                metadata={
-                    "num_children": len(cluster_nodes),
-                    "cluster_idx": cluster_idx
-                }
+                metadata=inherited_metadata
             )
             
             new_nodes.append(parent_node)

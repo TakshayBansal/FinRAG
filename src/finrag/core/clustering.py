@@ -23,6 +23,7 @@ class ClusterNode:
 class RAPTORClustering:
     """
     Implements RAPTOR's clustering algorithm for building hierarchical tree structures.
+    Supports metadata-based clustering (sector, company, year) as per FinRAG paper.
     """
     
     def __init__(
@@ -30,12 +31,16 @@ class RAPTORClustering:
         max_cluster_size: int = 100,
         min_cluster_size: int = 5,
         reduction_dimension: int = 10,
-        clustering_algorithm: str = "gaussian_mixture"
+        clustering_algorithm: str = "gaussian_mixture",
+        use_metadata_clustering: bool = True,
+        metadata_keys: List[str] = None
     ):
         self.max_cluster_size = max_cluster_size
         self.min_cluster_size = min_cluster_size
         self.reduction_dimension = reduction_dimension
         self.clustering_algorithm = clustering_algorithm
+        self.use_metadata_clustering = use_metadata_clustering
+        self.metadata_keys = metadata_keys or ["sector", "company", "year"]
     
     def global_cluster_embeddings(
         self,
@@ -209,3 +214,139 @@ class RAPTORClustering:
         ]
         
         return clusters
+    
+    def extract_metadata_groups(
+        self,
+        nodes: List,
+        metadata_keys: List[str] = None
+    ) -> Dict[tuple, List[int]]:
+        """
+        Group nodes by metadata (sector, company, year) as per FinRAG paper.
+        
+        Args:
+            nodes: List of nodes with metadata
+            metadata_keys: Keys to use for grouping (default: self.metadata_keys)
+        
+        Returns:
+            Dictionary mapping metadata tuples to lists of node indices
+        """
+        if metadata_keys is None:
+            metadata_keys = self.metadata_keys
+        
+        metadata_groups = {}
+        
+        for idx, node in enumerate(nodes):
+            # Extract metadata values
+            metadata_values = []
+            for key in metadata_keys:
+                value = node.metadata.get(key, "unknown")
+                # Normalize the value
+                if value is None:
+                    value = "unknown"
+                elif isinstance(value, (int, float)):
+                    value = str(value)
+                elif not isinstance(value, str):
+                    value = str(value)
+                metadata_values.append(value.lower().strip())
+            
+            # Create metadata tuple as key
+            metadata_key = tuple(metadata_values)
+            
+            if metadata_key not in metadata_groups:
+                metadata_groups[metadata_key] = []
+            metadata_groups[metadata_key].append(idx)
+        
+        return metadata_groups
+    
+    def perform_metadata_clustering(
+        self,
+        nodes: List,
+        embeddings: np.ndarray,
+        dim: int = 10,
+        threshold: float = 0.5
+    ) -> List[np.ndarray]:
+        """
+        Perform clustering with metadata grouping (sector, company, year) as first step.
+        Then perform embedding-based clustering within each metadata group.
+        
+        Args:
+            nodes: List of nodes with metadata
+            embeddings: Embeddings for the nodes
+            dim: Dimension for reduction
+            threshold: Clustering threshold
+        
+        Returns:
+            List of clusters (each cluster is an array of indices)
+        """
+        if len(embeddings) <= self.min_cluster_size:
+            return [np.arange(len(embeddings))]
+        
+        # Step 1: Group by metadata
+        metadata_groups = self.extract_metadata_groups(nodes)
+        
+        print(f"  Metadata grouping: {len(metadata_groups)} groups found")
+        for metadata_key, indices in list(metadata_groups.items())[:3]:
+            print(f"    {metadata_key}: {len(indices)} nodes")
+        
+        all_clusters = []
+        
+        # Step 2: Perform embedding-based clustering within each metadata group
+        for metadata_key, group_indices in metadata_groups.items():
+            group_indices = np.array(group_indices)
+            
+            # If group is too small, treat it as a single cluster
+            if len(group_indices) <= self.min_cluster_size:
+                all_clusters.append(group_indices)
+                continue
+            
+            # If group is too large, perform sub-clustering
+            if len(group_indices) > self.max_cluster_size:
+                # Get embeddings for this group
+                group_embeddings = embeddings[group_indices]
+                
+                # Perform embedding-based clustering
+                reduced = self.global_cluster_embeddings(group_embeddings, dim=dim)
+                
+                if self.clustering_algorithm == "gaussian_mixture":
+                    sub_clusters = self.gmm_clustering(reduced, threshold=threshold)
+                elif self.clustering_algorithm == "kmeans":
+                    n_clusters = min(len(group_indices) // self.min_cluster_size, 10)
+                    kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+                    labels = kmeans.fit_predict(reduced)
+                    sub_clusters = [np.where(labels == i)[0] for i in range(n_clusters)]
+                else:
+                    sub_clusters = [np.arange(len(group_indices))]
+                
+                # Map back to original indices
+                for sub_cluster in sub_clusters:
+                    if len(sub_cluster) >= self.min_cluster_size:
+                        all_clusters.append(group_indices[sub_cluster])
+            else:
+                # Group size is acceptable, keep as single cluster
+                all_clusters.append(group_indices)
+        
+        return all_clusters
+    
+    def perform_clustering_with_nodes(
+        self,
+        nodes: List,
+        embeddings: np.ndarray,
+        dim: int = 10,
+        threshold: float = 0.5
+    ) -> List[np.ndarray]:
+        """
+        Perform clustering with optional metadata support.
+        
+        Args:
+            nodes: List of nodes with metadata
+            embeddings: Embeddings for the nodes
+            dim: Dimension for reduction
+            threshold: Clustering threshold
+        
+        Returns:
+            List of clusters (each cluster is an array of indices)
+        """
+        if self.use_metadata_clustering and nodes is not None:
+            return self.perform_metadata_clustering(nodes, embeddings, dim, threshold)
+        else:
+            return self.perform_clustering(embeddings, dim, threshold)

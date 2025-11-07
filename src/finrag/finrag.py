@@ -64,7 +64,8 @@ class FinRAG:
         self.tree = RAPTORTree(
             embedding_model=self.embedding_model,
             summarization_model=self.summarization_model,
-            config=tree_config
+            config=tree_config,
+            use_metadata_clustering=self.config.use_metadata_clustering
         )
         
         self.retriever = None
@@ -147,7 +148,11 @@ class FinRAG:
         print("Chunking documents...")
         all_chunks = []
         for doc in documents:
-            chunks = self.chunker.chunk_text(doc)
+            # Use metadata extraction if metadata clustering is enabled
+            if self.config.use_metadata_clustering:
+                chunks = self.chunker.chunk_text_with_metadata(doc)
+            else:
+                chunks = self.chunker.chunk_text(doc)
             all_chunks.extend(chunks)
         
         print(f"Created {len(all_chunks)} chunks")
