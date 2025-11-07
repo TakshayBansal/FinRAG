@@ -37,9 +37,10 @@ class FinRAGConfig:
     max_cluster_size: int = field(default_factory=lambda: int(os.getenv("FINRAG_MAX_CLUSTER_SIZE", "100")))
     min_cluster_size: int = field(default_factory=lambda: int(os.getenv("FINRAG_MIN_CLUSTER_SIZE", "5")))
     summarization_length: int = field(default_factory=lambda: int(os.getenv("FINRAG_SUMMARIZATION_LENGTH", "200")))
-    tree_depth: int = field(default_factory=lambda: int(os.getenv("FINRAG_TREE_DEPTH", "3")))
+    tree_depth: int = field(default_factory=lambda: int(os.getenv("FINRAG_TREE_DEPTH", "4")))  # Set to 4 for fixed hierarchical structure
     
     # Metadata clustering (FinRAG paper feature)
+    # Fixed hierarchy: Layer 0 -> 1 (Year) -> 2 (Company) -> 3 (Sector) -> 4 (All)
     use_metadata_clustering: bool = field(default_factory=lambda: os.getenv("FINRAG_USE_METADATA_CLUSTERING", "true").lower() == "true")
     metadata_keys: List[str] = field(default_factory=lambda: ["sector", "company", "year"])
     

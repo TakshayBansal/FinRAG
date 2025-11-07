@@ -14,8 +14,17 @@ from .base_models import BaseEmbeddingModel, BaseSummarizationModel
 
 @dataclass
 class TreeConfig:
-    """Configuration for RAPTOR tree building."""
-    max_depth: int = 3
+    """
+    Configuration for RAPTOR tree building.
+    
+    For fixed hierarchical clustering (when use_metadata_clustering=True):
+    - Layer 0: Raw documents with full metadata (Sector, Company, Year)
+    - Layer 1: Cluster by Year - metadata: (Sector, Company, Year)
+    - Layer 2: Cluster by Company (squash years) - metadata: (Sector, Company, "all")
+    - Layer 3: Cluster by Sector (squash companies) - metadata: (Sector, "all", "all")
+    - Layer 4: Final summary of all - metadata: ("all", "all", "all")
+    """
+    max_depth: int = 4  # Set to 4 for fixed hierarchical structure
     max_cluster_size: int = 100
     min_cluster_size: int = 5
     reduction_dimension: int = 10
@@ -99,13 +108,23 @@ class RAPTORTree:
         self.root_nodes = current_level_nodes
         print(f"Tree building complete! Total levels: {current_level + 1}")
     
-    def _inherit_metadata_from_children(self, children: List[ClusterNode]) -> Dict[str, Any]:
+    def _inherit_metadata_from_children(
+        self, 
+        children: List[ClusterNode], 
+        current_level: int
+    ) -> Dict[str, Any]:
         """
-        Inherit metadata from children nodes.
-        Takes the most common value for each metadata field.
+        Inherit metadata from children nodes based on fixed hierarchy.
+        
+        For fixed hierarchical clustering:
+        - Level 1: (Sector, Company, Year) - specific year clusters
+        - Level 2: (Sector, Company, "all") - all years for a company
+        - Level 3: (Sector, "all", "all") - all companies in a sector
+        - Level 4: ("all", "all", "all") - all sectors
         
         Args:
             children: List of child nodes
+            current_level: Current level being built
             
         Returns:
             Dictionary of inherited metadata
@@ -113,24 +132,58 @@ class RAPTORTree:
         if not children:
             return {}
         
-        # Collect metadata from children
-        metadata_fields = ['sector', 'company', 'year']
+        from collections import Counter
+        
+        # Get the most common values from children
+        sector_values = []
+        company_values = []
+        year_values = []
+        
+        for child in children:
+            if hasattr(child, 'metadata') and child.metadata:
+                sector = child.metadata.get('sector')
+                company = child.metadata.get('company')
+                year = child.metadata.get('year')
+                
+                if sector and sector != 'unknown' and sector != 'all':
+                    sector_values.append(sector)
+                if company and company != 'unknown' and company != 'all':
+                    company_values.append(company)
+                if year and year != 'unknown' and year != 'all':
+                    year_values.append(year)
+        
+        # Determine metadata based on level
         inherited = {}
         
-        for field in metadata_fields:
-            # Get all non-None, non-'unknown' values for this field
-            values = []
-            for child in children:
-                if hasattr(child, 'metadata') and child.metadata:
-                    value = child.metadata.get(field)
-                    if value and value != 'unknown':
-                        values.append(value)
+        if current_level == 1:
+            # Level 1: Keep (Sector, Company, Year)
+            if sector_values:
+                inherited['sector'] = Counter(sector_values).most_common(1)[0][0]
+            if company_values:
+                inherited['company'] = Counter(company_values).most_common(1)[0][0]
+            if year_values:
+                inherited['year'] = Counter(year_values).most_common(1)[0][0]
+                
+        elif current_level == 2:
+            # Level 2: Keep (Sector, Company, "all") - squash years
+            if sector_values:
+                inherited['sector'] = Counter(sector_values).most_common(1)[0][0]
+            if company_values:
+                inherited['company'] = Counter(company_values).most_common(1)[0][0]
+            inherited['year'] = 'all'
             
-            if values:
-                # Use the most common value
-                from collections import Counter
-                most_common = Counter(values).most_common(1)[0][0]
-                inherited[field] = most_common
+        elif current_level == 3:
+            # Level 3: Keep (Sector, "all", "all") - squash companies
+            if sector_values:
+                inherited['sector'] = Counter(sector_values).most_common(1)[0][0]
+            inherited['company'] = 'all'
+            inherited['year'] = 'all'
+            
+        else:  # Level 4+
+            # Level 4: ("all", "all", "all") - final summary
+            inherited['sector'] = 'all'
+            inherited['company'] = 'all'
+            inherited['year'] = 'all'
         
         return inherited
     
@@ -155,8 +208,10 @@ class RAPTORTree:
         # Get embeddings for current nodes
         embeddings = np.array([node.embedding for node in nodes])
         
-        # Perform clustering with metadata awareness
-        clusters = self.clustering.perform_clustering_with_nodes(nodes, embeddings)
+        # Perform clustering with metadata awareness and current level
+        clusters = self.clustering.perform_clustering_with_nodes(
+            nodes, embeddings, current_level=level
+        )
         
         if len(clusters) == 0:
             return []
@@ -183,8 +238,8 @@ class RAPTORTree:
             # Create embedding for summary
             summary_embedding = self.embedding_model.create_embedding(summary)
             
-            # Inherit metadata from children (for metadata clustering consistency)
-            inherited_metadata = self._inherit_metadata_from_children(cluster_nodes)
+            # Inherit metadata from children with level-aware logic
+            inherited_metadata = self._inherit_metadata_from_children(cluster_nodes, level)
             inherited_metadata.update({
                 "num_children": len(cluster_nodes),
                 "cluster_idx": cluster_idx

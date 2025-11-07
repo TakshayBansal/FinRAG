@@ -327,10 +327,110 @@ class RAPTORClustering:
         
         return all_clusters
     
+    def perform_fixed_hierarchical_clustering(
+        self,
+        nodes: List,
+        embeddings: np.ndarray,
+        current_level: int,
+        dim: int = 10,
+        threshold: float = 0.5
+    ) -> List[np.ndarray]:
+        """
+        Perform fixed hierarchical clustering based on metadata levels:
+        - Level 1: Group by (Sector, Company, Year) - squash years
+        - Level 2: Group by (Sector, Company) - squash companies
+        - Level 3: Group by (Sector) - squash sectors
+        - Level 4: Group all - final summary
+        
+        Args:
+            nodes: List of nodes with metadata
+            embeddings: Embeddings for the nodes
+            current_level: Current level being built (1-4)
+            dim: Dimension for reduction
+            threshold: Clustering threshold
+        
+        Returns:
+            List of clusters (each cluster is an array of indices)
+        """
+        if len(embeddings) <= self.min_cluster_size:
+            return [np.arange(len(embeddings))]
+        
+        # Define grouping keys for each level
+        level_grouping = {
+            1: ["sector", "company", "year"],  # Layer 1: squash years
+            2: ["sector", "company"],          # Layer 2: squash companies  
+            3: ["sector"],                     # Layer 3: squash sectors
+            4: []                              # Layer 4: squash all (final summary)
+        }
+        
+        grouping_keys = level_grouping.get(current_level, [])
+        
+        # If level 4 or no grouping keys, cluster everything together
+        if current_level >= 4 or not grouping_keys:
+            # Create a single cluster of all nodes
+            return [np.arange(len(embeddings))]
+        
+        # Group by the specified metadata keys
+        metadata_groups = {}
+        for idx, node in enumerate(nodes):
+            # Extract metadata values for grouping
+            metadata_values = []
+            for key in grouping_keys:
+                value = node.metadata.get(key, "unknown")
+                # Normalize the value
+                if value is None:
+                    value = "unknown"
+                elif isinstance(value, (int, float)):
+                    value = str(value)
+                elif not isinstance(value, str):
+                    value = str(value)
+                metadata_values.append(value.lower().strip())
+            
+            # Create metadata tuple as key
+            metadata_key = tuple(metadata_values)
+            
+            if metadata_key not in metadata_groups:
+                metadata_groups[metadata_key] = []
+            metadata_groups[metadata_key].append(idx)
+        
+        print(f"  Level {current_level} grouping by {grouping_keys}: {len(metadata_groups)} groups")
+        
+        all_clusters = []
+        
+        # Convert metadata groups to clusters
+        for metadata_key, group_indices in metadata_groups.items():
+            group_indices = np.array(group_indices)
+            
+            # If group is small enough, keep as single cluster
+            if len(group_indices) <= self.max_cluster_size:
+                all_clusters.append(group_indices)
+            else:
+                # If group is too large, perform embedding-based sub-clustering
+                group_embeddings = embeddings[group_indices]
+                reduced = self.global_cluster_embeddings(group_embeddings, dim=dim)
+                
+                if self.clustering_algorithm == "gaussian_mixture":
+                    sub_clusters = self.gmm_clustering(reduced, threshold=threshold)
+                elif self.clustering_algorithm == "kmeans":
+                    n_clusters = max(2, len(group_indices) // self.max_cluster_size)
+                    kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+                    labels = kmeans.fit_predict(reduced)
+                    sub_clusters = [np.where(labels == i)[0] for i in range(n_clusters)]
+                else:
+                    sub_clusters = [np.arange(len(group_indices))]
+                
+                # Map back to original indices
+                for sub_cluster in sub_clusters:
+                    if len(sub_cluster) >= self.min_cluster_size:
+                        all_clusters.append(group_indices[sub_cluster])
+        
+        return all_clusters
+    
     def perform_clustering_with_nodes(
         self,
         nodes: List,
         embeddings: np.ndarray,
+        current_level: int = None,
         dim: int = 10,
         threshold: float = 0.5
     ) -> List[np.ndarray]:
@@ -340,6 +440,7 @@ class RAPTORClustering:
         Args:
             nodes: List of nodes with metadata
             embeddings: Embeddings for the nodes
+            current_level: Current level being built (for fixed hierarchical clustering)
             dim: Dimension for reduction
             threshold: Clustering threshold
         
@@ -347,6 +448,13 @@ class RAPTORClustering:
             List of clusters (each cluster is an array of indices)
         """
         if self.use_metadata_clustering and nodes is not None:
-            return self.perform_metadata_clustering(nodes, embeddings, dim, threshold)
+            if current_level is not None:
+                # Use fixed hierarchical clustering
+                return self.perform_fixed_hierarchical_clustering(
+                    nodes, embeddings, current_level, dim, threshold
+                )
+            else:
+                # Use original metadata clustering
+                return self.perform_metadata_clustering(nodes, embeddings, dim, threshold)
         else:
             return self.perform_clustering(embeddings, dim, threshold)
