@@ -61,6 +61,11 @@ class FinRAGConfig:
     llamaparse_num_workers: int = field(default_factory=lambda: int(os.getenv("FINRAG_LLAMAPARSE_WORKERS", "4")))
     llamaparse_language: str = field(default_factory=lambda: os.getenv("FINRAG_LLAMAPARSE_LANGUAGE", "en"))
     
+    # Filtered Parsing configuration (NEW - for intelligent content filtering)
+    use_filtered_parsing: bool = field(default_factory=lambda: os.getenv("FINRAG_USE_FILTERED_PARSING", "false").lower() == "true")
+    save_filtered_outputs: bool = field(default_factory=lambda: os.getenv("FINRAG_SAVE_FILTERED_OUTPUTS", "false").lower() == "true")
+    sections_to_extract: Optional[List[str]] = field(default_factory=lambda: None)  # None = extract all default sections
+    
     # Tree traversal method
     traversal_method: str = field(default_factory=lambda: os.getenv("FINRAG_TRAVERSAL_METHOD", "tree_traversal"))
     

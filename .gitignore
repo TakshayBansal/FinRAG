@@ -35,6 +35,7 @@ ENV/
 
 # FinRAG specific
 cache/
+data/
 finrag_index/
 finrag_example_index/
 *.pkl

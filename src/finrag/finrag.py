@@ -15,6 +15,7 @@ from .models import (
 )
 from .core.tree import RAPTORTree, TreeConfig
 from .core.retrieval import RAPTORRetriever
+from .utils.filtered_parser import FilteredDocumentParser
 
 
 class FinRAG:
@@ -70,39 +71,104 @@ class FinRAG:
         
         self.retriever = None
     
-    def load_pdf(self, pdf_path: str, use_llamaparse: bool = None) -> str:
+    def load_pdf(
+        self, 
+        pdf_path: str, 
+        use_llamaparse: bool = None,
+        use_filtering: bool = None,
+        sections_to_extract: Optional[List[str]] = None
+    ) -> str:
         """
         Load text from a PDF file using LlamaParse (preferred) or PyPDF2 (fallback).
         
         Args:
             pdf_path: Path to PDF file
             use_llamaparse: Override config to force LlamaParse usage (None = use config)
+            use_filtering: Whether to use filtered parsing (None = use config)
+            sections_to_extract: Specific sections to extract (None = all default sections)
         
         Returns:
-            Extracted text (markdown format if LlamaParse, plain text if PyPDF2)
+            Extracted text (filtered if enabled, markdown/plain text otherwise)
         """
         # Determine which parser to use
         if use_llamaparse is None:
             use_llamaparse = self.config.use_llamaparse
         
+        if use_filtering is None:
+            use_filtering = getattr(self.config, 'use_filtered_parsing', False)
+        
         # Try LlamaParse first if enabled and API key is available
         if use_llamaparse and self.config.llamaparse_api_key:
             try:
-                print(f"  Using LlamaParse for high-quality extraction...")
                 from llama_cloud_services import LlamaParse
                 
-                parser = LlamaParse(
-                    api_key=self.config.llamaparse_api_key,
-                    num_workers=self.config.llamaparse_num_workers,
-                    verbose=False,
-                    parse_mode=self.config.llamaparse_mode,
-                    language=self.config.llamaparse_language
-                )
+                # Use filtered parsing if enabled
+                if use_filtering:
+                    print(f"  Using LlamaParse with intelligent filtering...")
+                    
+                    # Initialize filtered parser
+                    filtered_parser = FilteredDocumentParser(
+                        sections_to_extract=sections_to_extract
+                    )
+                    
+                    # Generate system prompt for section extraction
+                    system_prompt = filtered_parser.generate_system_prompt()
+                    
+                    # Parse with custom prompt
+                    parser = LlamaParse(
+                        api_key=self.config.llamaparse_api_key,
+                        num_workers=self.config.llamaparse_num_workers,
+                        verbose=False,
+                        parse_mode="parse_document_with_llm",  # Use LLM mode for filtering
+                        language=self.config.llamaparse_language,
+                        system_prompt=system_prompt
+                    )
+                    
+                    result = parser.parse(pdf_path)
+                    raw_markdown = result.get_markdown()
+                    
+                    # Consolidate and filter sections
+                    consolidated_data = filtered_parser.consolidate_sections(raw_markdown)
+                    
+                    # Get statistics
+                    stats = filtered_parser.get_statistics(consolidated_data)
+                    print(f"  ✓ Filtered parsing complete:")
+                    print(f"    - Sections extracted: {stats['total_sections']}")
+                    print(f"    - Total items: {stats['total_items']}")
+                    print(f"    - Coverage: {stats['coverage']:.1f}%")
+                    
+                    # Convert to text format for embedding
+                    text = filtered_parser.convert_to_text(consolidated_data)
+                    
+                    # Optionally save outputs for debugging
+                    if hasattr(self.config, 'save_filtered_outputs') and self.config.save_filtered_outputs:
+                        output_dir = Path(pdf_path).parent / "filtered_outputs"
+                        base_name = Path(pdf_path).stem
+                        saved_files = filtered_parser.save_outputs(
+                            consolidated_data, 
+                            str(output_dir),
+                            base_name
+                        )
+                        print(f"    - Saved filtered outputs to: {output_dir}")
+                    
+                    print(f"  ✓ Final filtered text: {len(text)} chars (reduced from {len(raw_markdown)})")
+                    return text
                 
-                result = parser.parse(pdf_path)
-                text = result.get_markdown()
-                print(f"  ✓ Successfully parsed with LlamaParse ({len(text)} chars)")
-                return text
+                else:
+                    # Standard LlamaParse without filtering
+                    print(f"  Using LlamaParse for high-quality extraction...")
+                    parser = LlamaParse(
+                        api_key=self.config.llamaparse_api_key,
+                        num_workers=self.config.llamaparse_num_workers,
+                        verbose=False,
+                        parse_mode=self.config.llamaparse_mode,
+                        language=self.config.llamaparse_language
+                    )
+                    
+                    result = parser.parse(pdf_path)
+                    text = result.get_markdown()
+                    print(f"  ✓ Successfully parsed with LlamaParse ({len(text)} chars)")
+                    return text
                 
             except ImportError:
                 print("  ⚠ LlamaParse not installed, falling back to PyPDF2")
