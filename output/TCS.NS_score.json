@@ -1,0 +1,232 @@
+{
+  "score": 67.73691282995594,
+  "direction": "bullish",
+  "confidence": 69.16520753240133,
+  "component_scores": {
+    "sentiment": 62.48202851101322,
+    "yoy_trend": 53.8,
+    "risk_adjusted": 57.48202851101322,
+    "quantitative": 82.55,
+    "llm_judge": 89.0
+  },
+  "breakdown": {
+    "sentiment_analysis": {
+      "overall_score": 62.48202851101322,
+      "raw_score": 0.24964057022026442,
+      "aspect_scores": [
+        {
+          "aspect": "Revenue & Growth",
+          "question": "What are the revenue trends, growth rates, and sales performance? Provide specific numbers.",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.3514364949809263,
+          "weighted_score": 0.07907321137070841,
+          "weight": 0.25,
+          "answer_preview": "The revenue trends and growth rates for TCS indicate a positive trajectory. In the fiscal year ended March 31, 2025, TCS generated consolidated revenues of US $30 billion, with an annual revenue repor..."
+        },
+        {
+          "aspect": "Profitability",
+          "question": "What are the profit margins, net income, and profitability trends? Include specific percentages.",
+          "sentiment_score": 0.7,
+          "retrieval_confidence": 0.3,
+          "weighted_score": 0.041999999999999996,
+          "weight": 0.2,
+          "answer_preview": "The provided context does not contain specific figures for net income or detailed profitability trends beyond the operating and net margins for a specific fiscal year. However, it does mention that TC..."
+        },
+        {
+          "aspect": "Risk Factors",
+          "question": "What are the key risk factors, challenges, and threats mentioned in the report?",
+          "sentiment_score": 0.0,
+          "retrieval_confidence": 0.3072421688292819,
+          "weighted_score": 0.0,
+          "weight": 0.15,
+          "answer_preview": "The provided context does not explicitly mention specific risk factors, challenges, or threats faced by the company. It focuses more on the company's achievements, initiatives, financial performance, ..."
+        },
+        {
+          "aspect": "Strategic Initiatives",
+          "question": "What strategic initiatives, innovations, and future plans are mentioned?",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.44535141048478144,
+          "weighted_score": 0.0601224404154455,
+          "weight": 0.15,
+          "answer_preview": "The strategic initiatives, innovations, and future plans mentioned across the documents include:\n\n1. **AI and Digital Initiatives**: TCS is heavily investing in AI, with a focus on Generative AI (GenA..."
+        },
+        {
+          "aspect": "Market Position",
+          "question": "What is the company's competitive position, market share, and industry standing?",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.3633367291195129,
+          "weighted_score": 0.03270030562075617,
+          "weight": 0.1,
+          "answer_preview": "Based on the provided context, the company appears to be in a strong competitive position and industry standing, with several indicators of success and leadership in its field. However, specific marke..."
+        },
+        {
+          "aspect": "Financial Health",
+          "question": "What is the company's financial stability, cash flow, and debt situation?",
+          "sentiment_score": 0.7,
+          "retrieval_confidence": 0.3570981488081849,
+          "weighted_score": 0.02499687041657294,
+          "weight": 0.1,
+          "answer_preview": "The provided context does not contain specific details regarding the company's financial stability, cash flow, or debt situation in terms of exact figures or ratios that would typically be used to ass..."
+        },
+        {
+          "aspect": "Corporate Governance",
+          "question": "What are the management quality indicators and governance practices?",
+          "sentiment_score": 0.7,
+          "retrieval_confidence": 0.3070783541937547,
+          "weighted_score": 0.010747742396781413,
+          "weight": 0.05,
+          "answer_preview": "The management quality indicators and governance practices highlighted in the provided context include:\n\n1. **Board Composition and Independence**: The board has an average age of 63 years and an aver..."
+        }
+      ],
+      "confidence": 34.736332948806314
+    },
+    "yoy_trends": {
+      "score": 53.8,
+      "revenue_growth": 0.024,
+      "earnings_growth": 0.014,
+      "trend_analysis": "The provided context does not offer a comprehensive view of the revenue and profit trends over multiple years for a detailed year-over-year comparison. However, it does provide specific financial figures for the fiscal year ended March 31, 2025. For this year, TCS generated consolidated revenues of US $30 billion and reported an industry-leading operating margin of 24.3%. The company's net margin was at 19.0%, with earnings per share (EPS) at \u20b9134.19, marking a growth of 5.1% over the prior year..."
+    },
+    "risk_adjusted": {
+      "score": 57.48202851101322,
+      "base_score": 62.48202851101322,
+      "risk_adjustment": -5,
+      "risk_analysis": "Based on the provided context, the documents do not explicitly outline specific risks, challenges, or uncertainties facing the company directly. However, by analyzing the initiatives and strategic directions mentioned, we can infer potential areas of concern:\n\n1. **AI and Digital Transformation Initiatives**: The heavy investment in AI, GenAI, and digital transformation projects, including the development of novel molecules, AI-powered drug discovery, and digital concierge platforms, suggests a ..."
+    },
+    "quantitative": {
+      "score": 82.55,
+      "confidence": 100.0,
+      "breakdown": {
+        "valuation": 45.0,
+        "profitability": 90.0,
+        "growth": 45.0,
+        "financial_health": 68.33333333333333,
+        "momentum": 197.0
+      },
+      "raw_data": {
+        "ticker": "TCS.NS",
+        "company_name": "Tata Consultancy Services Limited",
+        "sector": "Technology",
+        "industry": "Information Technology Services",
+        "current_price": 2991.8,
+        "market_cap": 11064111529984,
+        "pe_ratio": 21.88108,
+        "forward_pe": 19.341867,
+        "peg_ratio": null,
+        "price_to_book": 10.172073,
+        "price_to_sales": 4.2936077,
+        "enterprise_value": 10457234538496,
+        "ev_to_revenue": 4.058,
+        "ev_to_ebitda": 15.626,
+        "profit_margin": 0.19186,
+        "operating_margin": 0.25183,
+        "gross_margin": 0.39074,
+        "roe": 0.47355998,
+        "roa": 0.23542,
+        "roic": null,
+        "revenue_growth": 0.024,
+        "earnings_growth": 0.014,
+        "earnings_quarterly_growth": 0.014,
+        "revenue_per_share": 712.222,
+        "total_cash": 487139999744,
+        "total_debt": 109320003584,
+        "debt_to_equity": 10.173,
+        "current_ratio": 2.433,
+        "quick_ratio": 2.209,
+        "free_cash_flow": 392652488704,
+        "operating_cash_flow": 518530007040,
+        "dividend_yield": 2.07,
+        "dividend_rate": 62.0,
+        "payout_ratio": 0.4465,
+        "target_mean_price": 3470.0,
+        "target_high_price": 4680.0,
+        "target_low_price": 1950.0,
+        "recommendation_key": "buy",
+        "number_of_analyst_opinions": 45,
+        "price_change_1m": 1.5404982459291952,
+        "price_change_3m": -12.145393255124292,
+        "price_change_6m": -22.74339219469774,
+        "price_change_1y": -25.4169441222298,
+        "volatility": 20.60633143234627,
+        "52_week_high": 4494.9,
+        "52_week_low": 2866.6,
+        "average_volume": 2929569,
+        "beta": 0.332,
+        "data_fetch_time": "2025-11-09T16:24:40.192394",
+        "data_completeness": 100.0
+      }
+    },
+    "llm_judge": {
+      "score": 89.0,
+      "reasoning": "89",
+      "context_preview": "The company, presumably Tata Consultancy Services (TCS), has demonstrated a robust financial performance and strategic positioning, underpinned by its investments in technology, particularly in artificial intelligence (AI) and digital transformation initiatives. The financial performance is highlighted by the company's industry-leading margins of 24.3%, which is a testament to its disciplined execution and operational rigor. This financial discipline is further evidenced by the approval of mater..."
+    },
+    "financial_data": {
+      "ticker": "TCS.NS",
+      "company_name": "Tata Consultancy Services Limited",
+      "sector": "Technology",
+      "industry": "Information Technology Services",
+      "current_price": 2991.8,
+      "market_cap": 11064111529984,
+      "pe_ratio": 21.88108,
+      "forward_pe": 19.341867,
+      "peg_ratio": null,
+      "price_to_book": 10.172073,
+      "price_to_sales": 4.2936077,
+      "enterprise_value": 10457234538496,
+      "ev_to_revenue": 4.058,
+      "ev_to_ebitda": 15.626,
+      "profit_margin": 0.19186,
+      "operating_margin": 0.25183,
+      "gross_margin": 0.39074,
+      "roe": 0.47355998,
+      "roa": 0.23542,
+      "roic": null,
+      "revenue_growth": 0.024,
+      "earnings_growth": 0.014,
+      "earnings_quarterly_growth": 0.014,
+      "revenue_per_share": 712.222,
+      "total_cash": 487139999744,
+      "total_debt": 109320003584,
+      "debt_to_equity": 10.173,
+      "current_ratio": 2.433,
+      "quick_ratio": 2.209,
+      "free_cash_flow": 392652488704,
+      "operating_cash_flow": 518530007040,
+      "dividend_yield": 2.07,
+      "dividend_rate": 62.0,
+      "payout_ratio": 0.4465,
+      "target_mean_price": 3470.0,
+      "target_high_price": 4680.0,
+      "target_low_price": 1950.0,
+      "recommendation_key": "buy",
+      "number_of_analyst_opinions": 45,
+      "price_change_1m": 1.5404982459291952,
+      "price_change_3m": -12.145393255124292,
+      "price_change_6m": -22.74339219469774,
+      "price_change_1y": -25.4169441222298,
+      "volatility": 20.60633143234627,
+      "52_week_high": 4494.9,
+      "52_week_low": 2866.6,
+      "average_volume": 2929569,
+      "beta": 0.332,
+      "data_fetch_time": "2025-11-09T16:24:40.192394",
+      "data_completeness": 100.0
+    }
+  },
+  "key_drivers": [
+    "Revenue & Growth: Strong performance",
+    "Profitability: Strong performance",
+    "Strategic Initiatives: Strong performance",
+    "Market Position: Strong performance",
+    "Financial Health: Strong performance"
+  ],
+  "risk_factors": [
+    "High debt-to-equity ratio: 10.17"
+  ],
+  "metadata": {
+    "ticker": "TCS.NS",
+    "company_name": "TCS",
+    "time_horizon": "6-12 months",
+    "generated_at": "2025-11-09T16:26:38.657972"
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "score": 61.469030848312975,
+  "direction": "neutral",
+  "confidence": 71.5994867285966,
+  "component_scores": {
+    "sentiment": 56.46451299625106,
+    "yoy_trend": 52.8,
+    "risk_adjusted": 49.46451299625106,
+    "quantitative": 75.775,
+    "llm_judge": 78.3
+  },
+  "breakdown": {
+    "sentiment_analysis": {
+      "overall_score": 56.46451299625106,
+      "raw_score": 0.12929025992502113,
+      "aspect_scores": [
+        {
+          "aspect": "Revenue & Growth",
+          "question": "What are the revenue trends, growth rates, and sales performance? Provide specific numbers.",
+          "sentiment_score": 0.0,
+          "retrieval_confidence": 0.3,
+          "weighted_score": 0.0,
+          "weight": 0.25,
+          "answer_preview": "The provided context does not contain specific information regarding revenue trends, growth rates, or sales performance for Wipro. Therefore, it's not possible to provide specific numbers or detailed ..."
+        },
+        {
+          "aspect": "Profitability",
+          "question": "What are the profit margins, net income, and profitability trends? Include specific percentages.",
+          "sentiment_score": 0.0,
+          "retrieval_confidence": 0.3,
+          "weighted_score": 0.0,
+          "weight": 0.2,
+          "answer_preview": "The provided context does not contain information regarding Wipro's profit margins, net income, or profitability trends, including specific percentages. The documents focus on Wipro's initiatives in s..."
+        },
+        {
+          "aspect": "Risk Factors",
+          "question": "What are the key risk factors, challenges, and threats mentioned in the report?",
+          "sentiment_score": 0.5,
+          "retrieval_confidence": 0.42949347925899406,
+          "weighted_score": 0.03221201094442455,
+          "weight": 0.15,
+          "answer_preview": "The provided context does not explicitly mention specific key risk factors, challenges, or threats faced by Wipro. The documents primarily focus on Wipro's emphasis on a solid governance framework for..."
+        },
+        {
+          "aspect": "Strategic Initiatives",
+          "question": "What strategic initiatives, innovations, and future plans are mentioned?",
+          "sentiment_score": 0.8,
+          "retrieval_confidence": 0.46732551778964504,
+          "weighted_score": 0.056079062134757406,
+          "weight": 0.15,
+          "answer_preview": "The strategic initiatives, innovations, and future plans mentioned include:\n\n1. **Net-Zero Targets**: JFK International Air Terminal (JFKIAT) has engaged Wipro Consulting to develop a carbon reduction..."
+        },
+        {
+          "aspect": "Market Position",
+          "question": "What is the company's competitive position, market share, and industry standing?",
+          "sentiment_score": 0.8,
+          "retrieval_confidence": 0.3415511599693974,
+          "weighted_score": 0.027324092797551797,
+          "weight": 0.1,
+          "answer_preview": "The provided context does not contain specific information regarding Wipro's competitive position, market share, or industry standing in terms of numerical data or direct comparisons with competitors...."
+        },
+        {
+          "aspect": "Financial Health",
+          "question": "What is the company's financial stability, cash flow, and debt situation?",
+          "sentiment_score": 0.0,
+          "retrieval_confidence": 0.32876726801365114,
+          "weighted_score": 0.0,
+          "weight": 0.1,
+          "answer_preview": "The provided context does not contain specific information regarding the company's financial stability, cash flow, or debt situation. The documents focus on Wipro's projects and initiatives, AI and di..."
+        },
+        {
+          "aspect": "Corporate Governance",
+          "question": "What are the management quality indicators and governance practices?",
+          "sentiment_score": 0.6,
+          "retrieval_confidence": 0.4558364682762461,
+          "weighted_score": 0.013675094048287382,
+          "weight": 0.05,
+          "answer_preview": "The management quality indicators and governance practices highlighted in the provided context focus on Wipro's emphasis on a solid governance framework for sustainable innovation. This framework incl..."
+        }
+      ],
+      "confidence": 37.471055618684765
+    },
+    "yoy_trends": {
+      "score": 52.8,
+      "revenue_growth": 0.018,
+      "earnings_growth": 0.01,
+      "trend_analysis": "The provided context does not contain specific information regarding Wipro's revenue and profit trends over the past years, nor does it compare year-over-year performance with financial figures. Therefore, it's not possible to answer the question based on the given context...."
+    },
+    "risk_adjusted": {
+      "score": 49.46451299625106,
+      "base_score": 56.46451299625106,
+      "risk_adjustment": -7,
+      "risk_analysis": "Based on the provided context, the documents do not explicitly list specific risks, challenges, or uncertainties facing the company directly. However, we can infer potential areas of concern from the information given:\n\n1. **Sustainability Targets**: JFK International Air Terminal (JFKIAT) has tasked Wipro Consulting with producing a carbon reduction roadmap to achieve a 50% reduction by 2030 and a 100% reduction by 2050. Achieving these ambitious net-zero targets could present significant chall..."
+    },
+    "quantitative": {
+      "score": 75.775,
+      "confidence": 100.0,
+      "breakdown": {
+        "valuation": 65.0,
+        "profitability": 77.5,
+        "growth": 45.0,
+        "financial_health": 68.33333333333333,
+        "momentum": 146.0
+      },
+      "raw_data": {
+        "ticker": "WIPRO.NS",
+        "company_name": "Wipro Limited",
+        "sector": "Technology",
+        "industry": "Information Technology Services",
+        "current_price": 236.49,
+        "market_cap": 2520188715008,
+        "pe_ratio": 18.418224,
+        "forward_pe": 9.354826,
+        "peg_ratio": null,
+        "price_to_book": 2.8772523,
+        "price_to_sales": 2.8109882,
+        "enterprise_value": 2128854777856,
+        "ev_to_revenue": 2.374,
+        "ev_to_ebitda": 12.394,
+        "profit_margin": 0.15057999,
+        "operating_margin": 0.16420999,
+        "gross_margin": 0.30118,
+        "roe": 0.16108999,
+        "roa": 0.073070005,
+        "roic": null,
+        "revenue_growth": 0.018,
+        "earnings_growth": 0.01,
+        "earnings_quarterly_growth": 0.012,
+        "revenue_per_share": 85.652,
+        "total_cash": 511180013568,
+        "total_debt": 161637007360,
+        "debt_to_equity": 18.738,
+        "current_ratio": 2.256,
+        "quick_ratio": 2.157,
+        "free_cash_flow": 126163623936,
+        "operating_cash_flow": 161768996864,
+        "dividend_yield": 4.65,
+        "dividend_rate": 11.0,
+        "payout_ratio": 0.856,
+        "target_mean_price": 253.06976,
+        "target_high_price": 300.0,
+        "target_low_price": 185.0,
+        "recommendation_key": "hold",
+        "number_of_analyst_opinions": 43,
+        "price_change_1m": -2.276857234229726,
+        "price_change_3m": -8.848354982713746,
+        "price_change_6m": -21.732664072401864,
+        "price_change_1y": -12.696720391730612,
+        "volatility": 25.690445464997502,
+        "52_week_high": 324.6,
+        "52_week_low": 228.0,
+        "average_volume": 8959292,
+        "beta": 0.59,
+        "data_fetch_time": "2025-11-09T16:29:04.355442",
+        "data_completeness": 100.0
+      }
+    },
+    "llm_judge": {
+      "score": 78.3,
+      "reasoning": "78.3",
+      "context_preview": "Based on the provided context, there is no specific information regarding Wipro's financial performance in terms of revenue, profit, or other financial metrics. Therefore, an assessment of the company's financial performance cannot be accurately provided from the given documents.\n\nHowever, the strategic position of Wipro can be inferred from its emphasis on a solid governance framework for sustainable innovation. The company collaborates closely with clients and stakeholders to integrate governa..."
+    },
+    "financial_data": {
+      "ticker": "WIPRO.NS",
+      "company_name": "Wipro Limited",
+      "sector": "Technology",
+      "industry": "Information Technology Services",
+      "current_price": 236.49,
+      "market_cap": 2520188715008,
+      "pe_ratio": 18.418224,
+      "forward_pe": 9.354826,
+      "peg_ratio": null,
+      "price_to_book": 2.8772523,
+      "price_to_sales": 2.8109882,
+      "enterprise_value": 2128854777856,
+      "ev_to_revenue": 2.374,
+      "ev_to_ebitda": 12.394,
+      "profit_margin": 0.15057999,
+      "operating_margin": 0.16420999,
+      "gross_margin": 0.30118,
+      "roe": 0.16108999,
+      "roa": 0.073070005,
+      "roic": null,
+      "revenue_growth": 0.018,
+      "earnings_growth": 0.01,
+      "earnings_quarterly_growth": 0.012,
+      "revenue_per_share": 85.652,
+      "total_cash": 511180013568,
+      "total_debt": 161637007360,
+      "debt_to_equity": 18.738,
+      "current_ratio": 2.256,
+      "quick_ratio": 2.157,
+      "free_cash_flow": 126163623936,
+      "operating_cash_flow": 161768996864,
+      "dividend_yield": 4.65,
+      "dividend_rate": 11.0,
+      "payout_ratio": 0.856,
+      "target_mean_price": 253.06976,
+      "target_high_price": 300.0,
+      "target_low_price": 185.0,
+      "recommendation_key": "hold",
+      "number_of_analyst_opinions": 43,
+      "price_change_1m": -2.276857234229726,
+      "price_change_3m": -8.848354982713746,
+      "price_change_6m": -21.732664072401864,
+      "price_change_1y": -12.696720391730612,
+      "volatility": 25.690445464997502,
+      "52_week_high": 324.6,
+      "52_week_low": 228.0,
+      "average_volume": 8959292,
+      "beta": 0.59,
+      "data_fetch_time": "2025-11-09T16:29:04.355442",
+      "data_completeness": 100.0
+    }
+  },
+  "key_drivers": [
+    "Strategic Initiatives: Strong performance",
+    "Market Position: Strong performance",
+    "Corporate Governance: Strong performance",
+    "Profitability: Excellent metrics",
+    "Momentum: Excellent metrics"
+  ],
+  "risk_factors": [
+    "High debt-to-equity ratio: 18.74"
+  ],
+  "metadata": {
+    "ticker": "WIPRO.NS",
+    "company_name": "Wipro",
+    "time_horizon": "6-12 months",
+    "generated_at": "2025-11-09T16:30:30.152892"
+  }
+}

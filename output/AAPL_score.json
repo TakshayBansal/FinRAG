@@ -1,0 +1,232 @@
+{
+  "score": 74.85631514804246,
+  "direction": "bullish",
+  "confidence": 72.63578806701945,
+  "component_scores": {
+    "sentiment": 63.18070032898324,
+    "yoy_trend": 77.9,
+    "risk_adjusted": 63.18070032898324,
+    "quantitative": 89.94999999999999,
+    "llm_judge": 85.7
+  },
+  "breakdown": {
+    "sentiment_analysis": {
+      "overall_score": 63.18070032898324,
+      "raw_score": 0.26361400657966483,
+      "aspect_scores": [
+        {
+          "aspect": "Revenue & Growth",
+          "question": "What are the revenue trends, growth rates, and sales performance? Provide specific numbers.",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.4014929344839495,
+          "weighted_score": 0.09033591025888864,
+          "weight": 0.25,
+          "answer_preview": "The revenue trends for TCS from FY 2021 to FY 2025 show a consistent increase in revenue year over year. The specific revenue figures in crore are as follows: FY 2021 - \u20b9164,177, FY 2022 - \u20b9191,754, F..."
+        },
+        {
+          "aspect": "Profitability",
+          "question": "What are the profit margins, net income, and profitability trends? Include specific percentages.",
+          "sentiment_score": 0.7,
+          "retrieval_confidence": 0.3944278835537569,
+          "weighted_score": 0.05521990369752596,
+          "weight": 0.2,
+          "answer_preview": "The provided context does not include specific figures for net income or a direct discussion of profit margins beyond operating margin and Return on Equity (ROE). However, it does offer detailed insig..."
+        },
+        {
+          "aspect": "Risk Factors",
+          "question": "What are the key risk factors, challenges, and threats mentioned in the report?",
+          "sentiment_score": 0.0,
+          "retrieval_confidence": 0.3730513552301272,
+          "weighted_score": 0.0,
+          "weight": 0.15,
+          "answer_preview": "The provided context does not contain specific information regarding key risk factors, challenges, and threats mentioned in the Integrated Annual Report 2024-25. The excerpts focus on the mention of \"..."
+        },
+        {
+          "aspect": "Strategic Initiatives",
+          "question": "What strategic initiatives, innovations, and future plans are mentioned?",
+          "sentiment_score": 0.8,
+          "retrieval_confidence": 0.36533606238788235,
+          "weighted_score": 0.04384032748654588,
+          "weight": 0.15,
+          "answer_preview": "The context provided does not explicitly detail specific strategic initiatives, innovations, or future plans. However, it does highlight several key outcomes and actions that indicate TCS's strategic ..."
+        },
+        {
+          "aspect": "Market Position",
+          "question": "What is the company's competitive position, market share, and industry standing?",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.37943564344837644,
+          "weighted_score": 0.03414920791035388,
+          "weight": 0.1,
+          "answer_preview": "The provided context does not contain specific information regarding the company's competitive position, market share, or industry standing. However, it does highlight several aspects of the company's..."
+        },
+        {
+          "aspect": "Financial Health",
+          "question": "What is the company's financial stability, cash flow, and debt situation?",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.4452073025150051,
+          "weighted_score": 0.04006865722635047,
+          "weight": 0.1,
+          "answer_preview": "The company, TCS, exhibits strong financial stability, robust cash flow, and a healthy approach to managing its finances, as evidenced by several key indicators:\n\n1. **Financial Stability and Profitab..."
+        },
+        {
+          "aspect": "Corporate Governance",
+          "question": "What are the management quality indicators and governance practices?",
+          "sentiment_score": 0.0,
+          "retrieval_confidence": 0.3363231493737477,
+          "weighted_score": 0.0,
+          "weight": 0.05,
+          "answer_preview": "The provided context does not contain specific information regarding management quality indicators and governance practices. It primarily focuses on financial capital figures, such as 103.62, 115.19, ..."
+        }
+      ],
+      "confidence": 38.5039190141835
+    },
+    "yoy_trends": {
+      "score": 77.9,
+      "revenue_growth": 0.079,
+      "earnings_growth": 0.912,
+      "trend_analysis": "The revenue and profit trends for TCS over the past years show consistent growth, underlining the company's resilient business performance and operational excellence. \n\nStarting with revenue, TCS has demonstrated a steady increase over the five financial years from FY 2021 to FY 2025. The revenue figures in crores (\u20b9) are as follows: FY 2021 - 164,177, FY 2022 - 191,754, FY 2023 - 225,458, FY 2024 - 240,893, and FY 2025 - 255,324. This progression reflects a compound annual growth rate (CAGR) of..."
+    },
+    "risk_adjusted": {
+      "score": 63.18070032898324,
+      "base_score": 63.18070032898324,
+      "risk_adjustment": 0,
+      "risk_analysis": "The provided context does not contain specific information regarding the key risks, challenges, and uncertainties facing the company. The documents primarily focus on financial capital figures within the Integrated Annual Report for the years 2024-25, including a series of numerical values that appear to represent financial performance or projections over several fiscal years. Without additional context or details, it is not possible to accurately identify or discuss the risks, challenges, and u..."
+    },
+    "quantitative": {
+      "score": 89.94999999999999,
+      "confidence": 100.0,
+      "breakdown": {
+        "valuation": 35.0,
+        "profitability": 92.5,
+        "growth": 77.5,
+        "financial_health": 51.666666666666664,
+        "momentum": 218.0
+      },
+      "raw_data": {
+        "ticker": "AAPL",
+        "company_name": "Apple Inc.",
+        "sector": "Technology",
+        "industry": "Consumer Electronics",
+        "current_price": 268.47,
+        "market_cap": 3967007326208,
+        "pe_ratio": 35.987934,
+        "forward_pe": 32.306858,
+        "peg_ratio": null,
+        "price_to_book": 53.79082,
+        "price_to_sales": 9.532386,
+        "enterprise_value": 4024687394816,
+        "ev_to_revenue": 9.671,
+        "ev_to_ebitda": 27.805,
+        "profit_margin": 0.26915002,
+        "operating_margin": 0.31647,
+        "gross_margin": 0.46905,
+        "roe": 1.7142199,
+        "roa": 0.22964,
+        "roic": null,
+        "revenue_growth": 0.079,
+        "earnings_growth": 0.912,
+        "earnings_quarterly_growth": 0.864,
+        "revenue_per_share": 27.84,
+        "total_cash": 54697000960,
+        "total_debt": 112377004032,
+        "debt_to_equity": 152.411,
+        "current_ratio": 0.893,
+        "quick_ratio": 0.771,
+        "free_cash_flow": 78862254080,
+        "operating_cash_flow": 111482003456,
+        "dividend_yield": 0.39,
+        "dividend_rate": 1.04,
+        "payout_ratio": 0.1367,
+        "target_mean_price": 280.45538,
+        "target_high_price": 345.0,
+        "target_low_price": 215.0,
+        "recommendation_key": "buy",
+        "number_of_analyst_opinions": 41,
+        "price_change_1m": 5.518220708677605,
+        "price_change_3m": 25.860304786746852,
+        "price_change_6m": 8.914262636987411,
+        "price_change_1y": 18.709482670909892,
+        "volatility": 32.64075033615528,
+        "52_week_high": 277.32,
+        "52_week_low": 169.21,
+        "average_volume": 51360265,
+        "beta": 1.109,
+        "data_fetch_time": "2025-11-09T16:10:26.502782",
+        "data_completeness": 100.0
+      }
+    },
+    "llm_judge": {
+      "score": 85.7,
+      "reasoning": "85.7",
+      "context_preview": "Based on the provided context, the company's financial performance shows a consistent growth in financial capital over the fiscal years from 2022 to 2025. The financial capital figures are as follows:\n\n- FY 2022: 89.27\n- FY 2023: 103.62\n- FY 2024*: 115.19\n- FY 2025: 127.74\n- FY 2025 (additional mention): 134.19\n\nThese figures indicate a steady increase in financial capital, suggesting that the company is on a positive trajectory in terms of financial performance. The repeated mention of \"134.19 ..."
+    },
+    "financial_data": {
+      "ticker": "AAPL",
+      "company_name": "Apple Inc.",
+      "sector": "Technology",
+      "industry": "Consumer Electronics",
+      "current_price": 268.47,
+      "market_cap": 3967007326208,
+      "pe_ratio": 35.987934,
+      "forward_pe": 32.306858,
+      "peg_ratio": null,
+      "price_to_book": 53.79082,
+      "price_to_sales": 9.532386,
+      "enterprise_value": 4024687394816,
+      "ev_to_revenue": 9.671,
+      "ev_to_ebitda": 27.805,
+      "profit_margin": 0.26915002,
+      "operating_margin": 0.31647,
+      "gross_margin": 0.46905,
+      "roe": 1.7142199,
+      "roa": 0.22964,
+      "roic": null,
+      "revenue_growth": 0.079,
+      "earnings_growth": 0.912,
+      "earnings_quarterly_growth": 0.864,
+      "revenue_per_share": 27.84,
+      "total_cash": 54697000960,
+      "total_debt": 112377004032,
+      "debt_to_equity": 152.411,
+      "current_ratio": 0.893,
+      "quick_ratio": 0.771,
+      "free_cash_flow": 78862254080,
+      "operating_cash_flow": 111482003456,
+      "dividend_yield": 0.39,
+      "dividend_rate": 1.04,
+      "payout_ratio": 0.1367,
+      "target_mean_price": 280.45538,
+      "target_high_price": 345.0,
+      "target_low_price": 215.0,
+      "recommendation_key": "buy",
+      "number_of_analyst_opinions": 41,
+      "price_change_1m": 5.518220708677605,
+      "price_change_3m": 25.860304786746852,
+      "price_change_6m": 8.914262636987411,
+      "price_change_1y": 18.709482670909892,
+      "volatility": 32.64075033615528,
+      "52_week_high": 277.32,
+      "52_week_low": 169.21,
+      "average_volume": 51360265,
+      "beta": 1.109,
+      "data_fetch_time": "2025-11-09T16:10:26.502782",
+      "data_completeness": 100.0
+    }
+  },
+  "key_drivers": [
+    "Revenue & Growth: Strong performance",
+    "Profitability: Strong performance",
+    "Strategic Initiatives: Strong performance",
+    "Market Position: Strong performance",
+    "Financial Health: Strong performance"
+  ],
+  "risk_factors": [
+    "High debt-to-equity ratio: 152.41"
+  ],
+  "metadata": {
+    "ticker": "AAPL",
+    "company_name": "Apple Inc.",
+    "time_horizon": "6-12 months",
+    "generated_at": "2025-11-09T16:12:02.823086"
+  }
+}

@@ -12,6 +12,7 @@ from .env_loader import (
 )
 
 from .utils import *
+from .filtered_parser import FilteredDocumentParser
 
 __all__ = [
     "load_env_file",
@@ -19,5 +20,6 @@ __all__ = [
     "get_env_value",
     "set_env_value",
     "create_env_file_from_template",
-    "print_env_help"
+    "print_env_help",
+    "FilteredDocumentParser"
 ]

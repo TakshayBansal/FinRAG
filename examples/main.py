@@ -34,29 +34,23 @@ def main():
     print("Initializing FinRAG system...")
     finrag = FinRAG(config)
     
-    # Example 1: Load and process a financial document
-    pdf_path = Path(__file__).parent.parent / "data" / "test_pdf.pdf"
+    # Load pre-built tree (built from all PDFs in data folder)
+    tree_path = Path(__file__).parent.parent / "finrag_tree"
     
-    if pdf_path.exists():
-        print(f"\nLoading PDF: {pdf_path}")
-        text = finrag.load_pdf(str(pdf_path))
-        print(f"Loaded {len(text)} characters")
-        
-        # Add document to FinRAG
-        print("\nProcessing document and building RAPTOR tree...")
-        finrag.add_documents([text])
+    if tree_path.exists():
+        print(f"\n✓ Loading pre-built tree from: {tree_path}")
+        finrag.load(str(tree_path))
         
         # Print statistics
         stats = finrag.get_statistics()
+        print("\n✓ Tree loaded successfully!")
         print("\nTree Statistics:")
         for key, value in stats.items():
             print(f"  {key}: {value}")
         
         # Example queries
         questions = [
-            "What are the main financial highlights?",
-            "What is the revenue growth rate?",
-            "What are the key risk factors mentioned?",
+            "What is the name of the company and its sector name?"
         ]
         
         print("\n" + "="*80)
@@ -82,25 +76,11 @@ def main():
             
             print()
         
-        # Save the system
-        save_path = "./finrag_index"
-        print(f"\nSaving FinRAG system to {save_path}...")
-        finrag.save(save_path)
-        
-        # Example: Load the saved system
-        print(f"\nLoading FinRAG system from {save_path}...")
-        finrag_loaded = FinRAG(config)
-        finrag_loaded.load(save_path)
-        
-        # Test loaded system
-        print("\nTesting loaded system...")
-        test_question = "Summarize the financial performance"
-        result = finrag_loaded.query(test_question)
-        print(f"Question: {test_question}")
-        print(f"Answer: {result['answer'][:200]}...")
-        
     else:
-        print(f"PDF file not found: {pdf_path}")
+        print(f"\n❌ Tree not found at: {tree_path}")
+        print("\nPlease build the tree first by running:")
+        print("  python scripts/build_tree.py")
+        print("\nThis will process all PDFs in the data folder and create a reusable tree.")
         # print("\nExample usage without PDF:")
         # print("="*80)
         

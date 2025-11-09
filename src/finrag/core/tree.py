@@ -270,6 +270,7 @@ class RAPTORTree:
             "config": asdict(self.config),
             "root_node_ids": [node.node_id for node in self.root_nodes],
             "leaf_node_ids": [node.node_id for node in self.leaf_nodes],
+            "use_metadata_clustering": self.use_metadata_clustering,
             "all_nodes": {}
         }
         
@@ -284,12 +285,34 @@ class RAPTORTree:
                 "metadata": node.metadata
             }
         
-        # Save as JSON and pickle
+        # Save as JSON (primary format - always works)
         with open(save_path / "tree.json", "w") as f:
             json.dump(tree_data, f, indent=2)
         
-        with open(save_path / "tree.pkl", "wb") as f:
-            pickle.dump(self, f)
+        # Try to save as pickle (faster to load but can fail with threading objects)
+        try:
+            # Store models temporarily
+            temp_embedding = self.embedding_model
+            temp_summarization = self.summarization_model
+            
+            # Remove unpicklable models
+            self.embedding_model = None
+            self.summarization_model = None
+            
+            with open(save_path / "tree.pkl", "wb") as f:
+                pickle.dump(self, f)
+            
+            # Restore models
+            self.embedding_model = temp_embedding
+            self.summarization_model = temp_summarization
+            
+            print("  ✓ Saved as both JSON and pickle")
+        except Exception as e:
+            # Restore models if pickle failed
+            self.embedding_model = temp_embedding
+            self.summarization_model = temp_summarization
+            print(f"  ⚠ Pickle save failed ({str(e)}), using JSON only")
+            print("  ✓ Tree saved as JSON (will load correctly)")
     
     @classmethod
     def load(cls, path: str, embedding_model: BaseEmbeddingModel, 
@@ -297,23 +320,31 @@ class RAPTORTree:
         """Load a tree from disk."""
         load_path = Path(path)
         
-        # Try pickle first (fastest)
+        # Try pickle first (fastest) - but may not exist if save failed
         pkl_path = load_path / "tree.pkl"
         if pkl_path.exists():
-            with open(pkl_path, "rb") as f:
-                tree = pickle.load(f)
-                tree.embedding_model = embedding_model
-                tree.summarization_model = summarization_model
-                return tree
+            try:
+                with open(pkl_path, "rb") as f:
+                    tree = pickle.load(f)
+                    tree.embedding_model = embedding_model
+                    tree.summarization_model = summarization_model
+                    print("  ✓ Loaded from pickle (fast)")
+                    return tree
+            except Exception as e:
+                print(f"  ⚠ Pickle load failed ({str(e)}), trying JSON...")
         
-        # Fall back to JSON
+        # Fall back to JSON (always works)
         json_path = load_path / "tree.json"
+        if not json_path.exists():
+            raise FileNotFoundError(f"No tree found at {path}. Expected tree.json or tree.pkl")
+        
         with open(json_path, "r") as f:
             tree_data = json.load(f)
         
         # Reconstruct tree
         config = TreeConfig(**tree_data["config"])
-        tree = cls(embedding_model, summarization_model, config)
+        use_metadata_clustering = tree_data.get("use_metadata_clustering", False)
+        tree = cls(embedding_model, summarization_model, config, use_metadata_clustering)
         
         # Rebuild nodes
         all_nodes = {}
@@ -337,6 +368,7 @@ class RAPTORTree:
         tree.root_nodes = [all_nodes[node_id] for node_id in tree_data["root_node_ids"]]
         tree.leaf_nodes = [all_nodes[node_id] for node_id in tree_data["leaf_node_ids"]]
         
+        print("  ✓ Loaded from JSON")
         return tree
     
     def get_all_texts(self) -> List[str]:

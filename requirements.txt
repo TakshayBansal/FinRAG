@@ -16,3 +16,5 @@ transformers>=4.30.0
 llama-parse>=0.4.0
 llama-cloud-services>=0.1.0
 python-dotenv>=1.0.0
+yfinance>=0.2.0
+feedparser>=6.0.0

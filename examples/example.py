@@ -34,15 +34,32 @@ def simple_example():
         return
     
     print("="*80)
-    print("FinRAG Simple Example")
+    print("FinRAG Simple Example - Using Pre-built Tree")
     print("="*80)
     
-    # Create sample financial documents
-    sample_documents = [
-        """
-        Financial Capital
-
-TCS' success is a testament to its robust business model and its ability to perpetually adapt in a constantly changing technology environment, ensuring it remains relevant to customers while delivering value to all stakeholders.
+    # Initialize FinRAG
+    config = FinRAGConfig()
+    finrag = FinRAG(config)
+    
+    # Load pre-built tree (built from all PDFs in data folder)
+    tree_path = Path(__file__).parent.parent / "finrag_tree"
+    
+    if not tree_path.exists():
+        print(f"\n❌ Tree not found at: {tree_path}")
+        print("\nPlease build the tree first by running:")
+        print("  python scripts/build_tree.py")
+        print("\nThis will process all PDFs in data folder and create a reusable tree.")
+        return
+    
+    print(f"\n✓ Loading pre-built tree from: {tree_path}")
+    finrag.load(str(tree_path))
+    
+    stats = finrag.get_statistics()
+    print(f"✓ Tree loaded successfully with {stats['total_nodes']} nodes")
+    
+    # Create sample query instead of building new tree
+    sample_query = """
+        What is TCS' financial capital and business model?
 
 - Superior profitability, providing the financial strength to invest in new capabilities, Research &#x26; Innovation, navigating economic downturns and changing technology waves
 - Prudent use of working capital and cash flow management, resulting in robust cash conversion and increased invested funds
@@ -124,35 +141,16 @@ TCS’ high and improving Return on Equity reflects the company’s ability to g
 
 Integrated Annual Report 2024-25
         """
-    ]
-    
-    # Initialize FinRAG (config loads from .env automatically)
-    print("\n1. Initializing FinRAG system...")
-    config = FinRAGConfig(
-        chunk_size=400,
-        chunk_overlap=50,
-        top_k=8,
-        tree_depth=2,
-        traversal_method="tree_traversal"
-    )
-    finrag = FinRAG(config)
-    
-    # Build the tree
-    print("\n2. Building RAPTOR tree from sample documents...")
-    finrag.add_documents(sample_documents)
-    
-    # Show statistics
-    print("\n3. Tree Statistics:")
-    stats = finrag.get_statistics()
-    for key, value in stats.items():
-        print(f"   {key}: {value}")
     
     # Example queries
-    print("\n4. Running Example Queries")
+    print("\n" + "="*80)
+    print("Running Example Queries")
     print("="*80)
     
     queries = [
-        "What is the estimated future trend of the stock based on this data? Give the direction along with confidence score(out of 100)."
+        "What is TCS' financial capital and business model?",
+        "What were TCS' revenue and operating margins in FY 2025?",
+        "What is the shareholder payout ratio?"
     ]
     
     for i, question in enumerate(queries, 1):
@@ -165,19 +163,6 @@ Integrated Annual Report 2024-25
         print(f"\n(Retrieved {len(result['retrieved_nodes'])} nodes, "
               f"Method: {result['retrieval_method']})")
         print()
-    
-    # Save the system
-    print("\n5. Saving FinRAG system...")
-    save_path = "./finrag_example_index"
-    finrag.save(save_path)
-    print(f"   Saved to: {save_path}")
-    
-    # Test loading
-    print("\n6. Testing reload functionality...")
-    finrag_reloaded = FinRAG(config)
-    finrag_reloaded.load(save_path)
-    test_result = finrag_reloaded.query("What is the operating margin?")
-    print(f"   Test query result: {test_result['answer'][:100]}...")
     
     print("\n" + "="*80)
     print("Example completed successfully!")
