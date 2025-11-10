@@ -9,9 +9,20 @@ from .models import (
     FinancialChunker
 )
 
+from .fallback_models import (
+    SentenceTransformerEmbeddingModel,
+    FlanT5SummarizationModel,
+    FlanT5QAModel,
+    check_openai_key_valid
+)
+
 __all__ = [
     "OpenAIEmbeddingModel",
     "OpenAISummarizationModel",
     "OpenAIQAModel",
-    "FinancialChunker"
+    "FinancialChunker",
+    "SentenceTransformerEmbeddingModel",
+    "FlanT5SummarizationModel",
+    "FlanT5QAModel",
+    "check_openai_key_valid"
 ]

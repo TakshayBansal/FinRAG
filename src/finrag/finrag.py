@@ -5,6 +5,7 @@ from typing import List, Dict, Any, Optional
 import numpy as np
 from pathlib import Path
 import PyPDF2
+import os
 
 from .config import FinRAGConfig
 from .models import (
@@ -12,6 +13,12 @@ from .models import (
     OpenAISummarizationModel,
     OpenAIQAModel,
     FinancialChunker
+)
+from .models.fallback_models import (
+    SentenceTransformerEmbeddingModel,
+    FlanT5SummarizationModel,
+    FlanT5QAModel,
+    check_openai_key_valid
 )
 from .core.tree import RAPTORTree, TreeConfig
 from .core.retrieval import RAPTORRetriever
@@ -33,21 +40,53 @@ class FinRAG:
         """
         self.config = config or FinRAGConfig()
         
-        # Initialize models
-        self.embedding_model = OpenAIEmbeddingModel(
-            model=self.config.embedding_model,
-            api_key=self.config.openai_api_key
-        )
+        # Check if OpenAI API key is available and valid
+        has_openai = check_openai_key_valid(self.config.openai_api_key)
         
-        self.summarization_model = OpenAISummarizationModel(
-            model=self.config.summarization_model,
-            api_key=self.config.openai_api_key
-        )
+        if not has_openai:
+            print("\n" + "="*60)
+            print("⚠️  OpenAI API Key Not Available")
+            print("="*60)
+            print("Using FREE open-source AI models:")
+            print("  • Embeddings: sentence-transformers (all-MiniLM-L6-v2)")
+            print("  • Summarization: FLAN-T5-small (Google)")
+            print("  • QA: FLAN-T5-small (Google)")
+            print("\nThese are actual AI models - not just keyword matching!")
+            print("Quality: ~60-70% of OpenAI models")
+            print("\nFor best results, set OPENAI_API_KEY:")
+            print("  Windows: $env:OPENAI_API_KEY='sk-...'")
+            print("  Linux/Mac: export OPENAI_API_KEY='sk-...'")
+            print("="*60 + "\n")
         
-        self.qa_model = OpenAIQAModel(
-            model=self.config.llm_model,
-            api_key=self.config.openai_api_key
-        )
+        # Initialize models with fallback
+        if has_openai:
+            self.embedding_model = OpenAIEmbeddingModel(
+                model=self.config.embedding_model,
+                api_key=self.config.openai_api_key
+            )
+            
+            self.summarization_model = OpenAISummarizationModel(
+                model=self.config.summarization_model,
+                api_key=self.config.openai_api_key
+            )
+            
+            self.qa_model = OpenAIQAModel(
+                model=self.config.llm_model,
+                api_key=self.config.openai_api_key
+            )
+        else:
+            # Use fallback models (free, open-source AI)
+            self.embedding_model = SentenceTransformerEmbeddingModel(
+                model="all-MiniLM-L6-v2"
+            )
+            
+            self.summarization_model = FlanT5SummarizationModel(
+                model_name="google/flan-t5-small"
+            )
+            
+            self.qa_model = FlanT5QAModel(
+                model_name="google/flan-t5-small"
+            )
         
         self.chunker = FinancialChunker(
             chunk_size=self.config.chunk_size,

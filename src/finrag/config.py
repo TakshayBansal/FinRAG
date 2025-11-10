@@ -75,7 +75,7 @@ class FinRAGConfig:
     
     def __post_init__(self):
         """Validate configuration."""
-        if not self.openai_api_key:
-            raise ValueError("OpenAI API key must be provided")
+        # OpenAI API key is optional now - fallback models will be used if not provided
+        # No longer raising error for missing API key
         
         os.makedirs(self.cache_dir, exist_ok=True)
