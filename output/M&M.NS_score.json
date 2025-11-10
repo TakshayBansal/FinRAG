@@ -1,0 +1,232 @@
+{
+  "score": 77.08711526846582,
+  "direction": "bullish",
+  "confidence": 72.75981259917467,
+  "component_scores": {
+    "sentiment": 65.39914504103517,
+    "yoy_trend": 84.8,
+    "risk_adjusted": 60.39914504103517,
+    "quantitative": 91.7375,
+    "llm_judge": 89.0
+  },
+  "breakdown": {
+    "sentiment_analysis": {
+      "overall_score": 65.39914504103517,
+      "raw_score": 0.3079829008207033,
+      "aspect_scores": [
+        {
+          "aspect": "Revenue & Growth",
+          "question": "What are the revenue trends, growth rates, and sales performance? Provide specific numbers.",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.4300511607138623,
+          "weighted_score": 0.09676151116061901,
+          "weight": 0.25,
+          "answer_preview": "The revenue trends, growth rates, and sales performance across various companies and sectors as detailed in the provided documents are as follows:\n\n1. **TCS** reported a revenue from operations for FY..."
+        },
+        {
+          "aspect": "Profitability",
+          "question": "What are the profit margins, net income, and profitability trends? Include specific percentages.",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.35782747008398974,
+          "weighted_score": 0.06440894461511816,
+          "weight": 0.2,
+          "answer_preview": "The provided context across the documents offers a variety of financial metrics and trends for different companies, highlighting profit margins, net income, and profitability trends. However, not all ..."
+        },
+        {
+          "aspect": "Risk Factors",
+          "question": "What are the key risk factors, challenges, and threats mentioned in the report?",
+          "sentiment_score": -0.3,
+          "retrieval_confidence": 0.37323653054244565,
+          "weighted_score": -0.016795643874410054,
+          "weight": 0.15,
+          "answer_preview": "The provided context does not explicitly mention specific key risk factors, challenges, or threats faced by the companies discussed in the documents. However, it does highlight several areas of focus ..."
+        },
+        {
+          "aspect": "Strategic Initiatives",
+          "question": "What strategic initiatives, innovations, and future plans are mentioned?",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.5012567833148602,
+          "weighted_score": 0.06766966574750613,
+          "weight": 0.15,
+          "answer_preview": "The strategic initiatives, innovations, and future plans mentioned across the documents include:\n\n1. **Wipro**:\n   - Launch of Wipro Ventures, a $250 million fund for investing in startups.\n   - Intro..."
+        },
+        {
+          "aspect": "Market Position",
+          "question": "What is the company's competitive position, market share, and industry standing?",
+          "sentiment_score": 0.8,
+          "retrieval_confidence": 0.41610643688997156,
+          "weighted_score": 0.03328851495119773,
+          "weight": 0.1,
+          "answer_preview": "The context provided does not include explicit details about the company's competitive position, market share, or industry standing in numerical terms or direct comparisons with competitors. However, ..."
+        },
+        {
+          "aspect": "Financial Health",
+          "question": "What is the company's financial stability, cash flow, and debt situation?",
+          "sentiment_score": 0.9,
+          "retrieval_confidence": 0.48335533842728495,
+          "weighted_score": 0.04350198045845565,
+          "weight": 0.1,
+          "answer_preview": "The company demonstrates financial stability with robust liquidity, as indicated by its ability to prepay long-term debts of \u20b94,495 crore and redeem debentures of \u20b9700 crore in India while maintaining..."
+        },
+        {
+          "aspect": "Corporate Governance",
+          "question": "What are the management quality indicators and governance practices?",
+          "sentiment_score": 0.8,
+          "retrieval_confidence": 0.4786981940554159,
+          "weighted_score": 0.01914792776221664,
+          "weight": 0.05,
+          "answer_preview": "The management quality indicators and governance practices highlighted in the provided context include maintaining transparency and integrity at the highest levels of governance, addressing conflicts ..."
+        }
+      ],
+      "confidence": 43.43617020039758
+    },
+    "yoy_trends": {
+      "score": 84.8,
+      "revenue_growth": 0.212,
+      "earnings_growth": 0.148,
+      "trend_analysis": "The context provided across the documents does not consistently offer a year-over-year comparison of revenue and profit trends for a single entity or across multiple years for any specific company. However, there are isolated financial figures for certain fiscal years for different entities, which do not allow for a direct comparison of year-over-year performance due to the lack of consistent annual data for any single entity. For instance:\n\n- Document 3 mentions TCS's revenue from operations fo..."
+    },
+    "risk_adjusted": {
+      "score": 60.39914504103517,
+      "base_score": 65.39914504103517,
+      "risk_adjustment": -5,
+      "risk_analysis": "The provided context does not contain specific information regarding the key risks, challenges, and uncertainties facing the company directly. However, based on the general themes and initiatives mentioned across the documents, we can infer potential areas of concern:\n\n1. **Integration and Execution Risks**: With numerous project launches, mergers (such as the merger of HDFC Bank and erstwhile HDFC Limited), and directorial changes, there is a potential risk in the seamless integration of these ..."
+    },
+    "quantitative": {
+      "score": 91.7375,
+      "confidence": 100.0,
+      "breakdown": {
+        "valuation": 45.0,
+        "profitability": 71.25,
+        "growth": 82.5,
+        "financial_health": 58.333333333333336,
+        "momentum": 237.0
+      },
+      "raw_data": {
+        "ticker": "M&M.NS",
+        "company_name": "Mahindra & Mahindra Limited",
+        "sector": "Consumer Cyclical",
+        "industry": "Auto Manufacturers",
+        "current_price": 3663.9,
+        "market_cap": 4396849561600,
+        "pe_ratio": 28.947617,
+        "forward_pe": 26.19455,
+        "peg_ratio": null,
+        "price_to_book": 4.93791,
+        "price_to_sales": 2.4727392,
+        "enterprise_value": 5185606778880,
+        "ev_to_revenue": 2.916,
+        "ev_to_ebitda": 15.662,
+        "profit_margin": 0.08004,
+        "operating_margin": 0.16986999,
+        "gross_margin": 0.39089,
+        "roe": 0.17235,
+        "roa": 0.06706,
+        "roic": null,
+        "revenue_growth": 0.212,
+        "earnings_growth": 0.148,
+        "earnings_quarterly_growth": 0.159,
+        "revenue_per_share": 1593.063,
+        "total_cash": 384669188096,
+        "total_debt": 1297657364480,
+        "debt_to_equity": 132.29,
+        "current_ratio": 1.348,
+        "quick_ratio": 0.481,
+        "free_cash_flow": 62881312768,
+        "operating_cash_flow": 66836099072,
+        "dividend_yield": 0.69,
+        "dividend_rate": 25.3,
+        "payout_ratio": 0.2001,
+        "target_mean_price": 4017.889,
+        "target_high_price": 4500.0,
+        "target_low_price": 3600.0,
+        "recommendation_key": "strong_buy",
+        "number_of_analyst_opinions": 36,
+        "price_change_1m": 7.872807370638893,
+        "price_change_3m": 16.685708243237674,
+        "price_change_6m": 30.416711529816464,
+        "price_change_1y": 26.026606499055934,
+        "volatility": 27.923646889631325,
+        "52_week_high": 3723.8,
+        "52_week_low": 2425.0,
+        "average_volume": 2502887,
+        "beta": 0.406,
+        "data_fetch_time": "2025-11-10T22:01:04.379034",
+        "data_completeness": 100.0
+      }
+    },
+    "llm_judge": {
+      "score": 89.0,
+      "reasoning": "89",
+      "context_preview": "Based on the provided context, the comprehensive overview of the company's financial performance, strategic position, and future outlook can be summarized as follows:\n\n**Financial Performance:**\n- Mahindra Group has outlined a significant capital expenditure plan of INR 37,000 Crores for the next three years, focusing on innovation and prudent capital allocation. This investment is directed across Auto, Farm, and Services businesses, with a pipeline of 26 new models/facelifts planned for the nex..."
+    },
+    "financial_data": {
+      "ticker": "M&M.NS",
+      "company_name": "Mahindra & Mahindra Limited",
+      "sector": "Consumer Cyclical",
+      "industry": "Auto Manufacturers",
+      "current_price": 3663.9,
+      "market_cap": 4396849561600,
+      "pe_ratio": 28.947617,
+      "forward_pe": 26.19455,
+      "peg_ratio": null,
+      "price_to_book": 4.93791,
+      "price_to_sales": 2.4727392,
+      "enterprise_value": 5185606778880,
+      "ev_to_revenue": 2.916,
+      "ev_to_ebitda": 15.662,
+      "profit_margin": 0.08004,
+      "operating_margin": 0.16986999,
+      "gross_margin": 0.39089,
+      "roe": 0.17235,
+      "roa": 0.06706,
+      "roic": null,
+      "revenue_growth": 0.212,
+      "earnings_growth": 0.148,
+      "earnings_quarterly_growth": 0.159,
+      "revenue_per_share": 1593.063,
+      "total_cash": 384669188096,
+      "total_debt": 1297657364480,
+      "debt_to_equity": 132.29,
+      "current_ratio": 1.348,
+      "quick_ratio": 0.481,
+      "free_cash_flow": 62881312768,
+      "operating_cash_flow": 66836099072,
+      "dividend_yield": 0.69,
+      "dividend_rate": 25.3,
+      "payout_ratio": 0.2001,
+      "target_mean_price": 4017.889,
+      "target_high_price": 4500.0,
+      "target_low_price": 3600.0,
+      "recommendation_key": "strong_buy",
+      "number_of_analyst_opinions": 36,
+      "price_change_1m": 7.872807370638893,
+      "price_change_3m": 16.685708243237674,
+      "price_change_6m": 30.416711529816464,
+      "price_change_1y": 26.026606499055934,
+      "volatility": 27.923646889631325,
+      "52_week_high": 3723.8,
+      "52_week_low": 2425.0,
+      "average_volume": 2502887,
+      "beta": 0.406,
+      "data_fetch_time": "2025-11-10T22:01:04.379034",
+      "data_completeness": 100.0
+    }
+  },
+  "key_drivers": [
+    "Revenue & Growth: Strong performance",
+    "Profitability: Strong performance",
+    "Strategic Initiatives: Strong performance",
+    "Market Position: Strong performance",
+    "Financial Health: Strong performance"
+  ],
+  "risk_factors": [
+    "High debt-to-equity ratio: 132.29"
+  ],
+  "metadata": {
+    "ticker": "M&M.NS",
+    "company_name": "Mahindra",
+    "time_horizon": "6-12 months",
+    "generated_at": "2025-11-10T22:03:34.118071"
+  }
+}
